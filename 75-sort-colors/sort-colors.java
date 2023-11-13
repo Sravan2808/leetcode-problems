@@ -1,3 +1,5 @@
+//Time Complexity:O(n)
+//Space Complexity:O(1)
 class Solution {
     public void sortColors(int[] nums) {
         int p0=0,p2=nums.length-1,curr=0;
