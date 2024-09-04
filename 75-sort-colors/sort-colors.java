@@ -1,26 +1,17 @@
-//Time Complexity:O(n)
-//Space Complexity:O(1)
 class Solution {
     public void sortColors(int[] nums) {
-        int p0=0,p2=nums.length-1,curr=0;
-        while(curr <= p2){
-            if(nums[curr]==0){
-                int temp=nums[p0];
-                nums[p0]=nums[curr];
-                nums[curr]=temp;
-                p0++;
-                curr++; 
-                }
-            else if(nums[curr]==2){
-                int temp = nums[curr];
-                nums[curr]=nums[p2];
-                nums[p2]=temp;
-                p2--;
-            }
-            else{
-                curr++;
-            }
+        int cnt0=0,cnt1=0,cnt2=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0)cnt0++;
+            else if(nums[i]==1)cnt1++;
+            else cnt2++;
         }
+        for(int i=0;i<cnt0;i++)
+        nums[i]=0;
+        for(int i=cnt0;i<cnt0+cnt1;i++)
+        nums[i]=1;
+        for(int i=cnt0+cnt1;i<nums.length;i++)
+        nums[i]=2;
 
         
     }
