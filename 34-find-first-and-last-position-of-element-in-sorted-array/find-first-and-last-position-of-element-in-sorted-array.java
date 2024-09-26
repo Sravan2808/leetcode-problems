@@ -1,16 +1,14 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int firstPosition=-1;
-        int lastPosition=-1;
+        // BruteForce Approach
+        int first=-1,last=-1;
         for(int i=0;i<nums.length;i++){
-            if(nums[i]==target)
-            {
-                if(firstPosition==-1)
-                firstPosition=i;
-                lastPosition=i;
+            if(nums[i] == target){
+                if(first == -1) first=i;
+                last = i;
             }
         }
-        return new int[]{firstPosition,lastPosition};
+        return new int[]{first,last};
         
     }
 }
