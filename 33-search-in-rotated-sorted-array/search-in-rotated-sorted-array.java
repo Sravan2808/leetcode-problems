@@ -7,7 +7,7 @@ class Solution {
         //         ans=i;
         // }
         // return ans;
-        
+        // optimal Approach:O(logn)
         int n = nums.length;
         int low = 0,high=n-1;
         while(low<=high){
