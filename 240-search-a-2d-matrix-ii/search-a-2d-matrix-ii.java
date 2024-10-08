@@ -27,7 +27,7 @@ class Solution {
         // }
         // return false;
 
-        // OptimalApproach:O(log(n*m)) Sc:O(1)
+        // OptimalApproach:O(log(n+m)) Sc:O(1)
         int row =0;
         int col =matrix[0].length-1;
         while(row<matrix.length && col>=0){
