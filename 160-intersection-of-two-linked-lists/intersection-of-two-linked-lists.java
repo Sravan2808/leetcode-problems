@@ -11,17 +11,17 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if(headA==null || headB==null){
-            return null;
+        Map<ListNode,Integer>  map = new HashMap<>();
+        ListNode temp = headA;
+        while(temp!=null){
+            map.put(temp,map.getOrDefault(temp,0)+1);
+            temp=temp.next;
         }
-        ListNode dummyNode1=headA;
-        ListNode dummyNode2=headB;
-        
-        while(dummyNode1!=dummyNode2){
-            dummyNode1=dummyNode1==null?headB:dummyNode1.next;
-            dummyNode2=dummyNode2==null?headA:dummyNode2.next;
+        temp = headB;
+        while(temp!=null){
+            if(map.containsKey(temp)) return temp;
+            temp=temp.next;
         }
-        return dummyNode2;
-    
+        return null;
     }
 }
