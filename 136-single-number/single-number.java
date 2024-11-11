@@ -1,22 +1,21 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        //  Hashing
-
-        // Map<Integer,Integer> mp = new HashMap<>();
-        // for(int i=0;i<nums.length;i++){
-        //     int value=mp.getOrDefault(nums[i],0);
-        //     mp.put(nums[i],value+1);
+        // BruteForce Hashmap TC:O(n) SC:O(n)
+        // HashMap<Integer, Integer> map = new HashMap<>();
+        // for (int i = 0; i < nums.length; i++) {
+        //     map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         // }
-        // for(Map.Entry<Integer,Integer> it : mp.entrySet()){
-        //     if(it.getValue()==1)
-        //     return it.getKey();
+        // for (Map.Entry<Integer, Integer> mp : map.entrySet()) {
+        //     if (mp.getValue() == 1)
+        //         return mp.getKey();
         // }
         // return -1;
 
-        // Xor
-        int xor=0;
-        for(int i=0;i<nums.length;i++)
-        xor=xor^nums[i];
+        // Optimized Approach Bit Manipulation TC:O(n) SC:O(1)
+        int xor = 0;
+        for(int i=0;i<nums.length;i++){
+            xor = xor^nums[i];
+        }
         return xor;
     }
 }
