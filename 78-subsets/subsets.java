@@ -1,22 +1,18 @@
 class Solution {
-    public void backtrack(int idx,List<List<Integer>> result,ArrayList<Integer> currList,int nums[])
-    {
-        result.add(new ArrayList(currList));
-        for(int i=idx;i<nums.length;i++)
-        {
-            //added current element in the result
-            currList.add(nums[i]);
-            // generate further
-            backtrack(i+1,result,currList,nums);
-            // once all exploration remove the last element
-            currList.remove(currList.size()-1);
-        }
-    }
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        ArrayList<Integer> currList = new ArrayList<>();
-        backtrack(0,result,currList,nums);
-        return result;
+        // BitManipulation TC:O(n*2^n) SC:O(n*2^n)
+        int n = nums.length;
+        int subset = 1<<n;
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i=0;i<subset;i++){
+            List<Integer> list = new ArrayList<>();
+            for(int j=0;j<n;j++){
+            if((i&(1<<j))!=0) list.add(nums[j]);
+        }
+        ans.add(list);
+        }
+        
+        return ans;
         
     }
 }
