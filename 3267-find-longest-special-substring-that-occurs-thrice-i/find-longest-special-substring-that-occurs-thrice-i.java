@@ -1,26 +1,31 @@
 class Solution {
     public int maximumLength(String s) {
         int n = s.length();
-        Map<Pair<Character,Integer>,Integer> mp = new HashMap<>();
+        int mat[][] = new int[26][n+1];
+        char prevChar = s.charAt(0);
+        int length = 0;
 
-        for(int i=0 ; i<n;i++){
-            char ch = s.charAt(i);
-            int length = 0;
-            for(int j=i;j<n;j++){
-                if(s.charAt(j) == ch){
-                    length++;
-                    Pair<Character,Integer> key = new Pair<>(ch,length);
-                    mp.put(key,mp.getOrDefault(key,0)+1);
-                }else{
-                    break;
-                }
+        for(int i=0;i<n;i++){
+            char currChar = s.charAt(i);
+            if(currChar == prevChar){
+                length+=1;
+                mat[currChar-'a'][length] += 1;
+            }
+            else{
+                length = 1;
+                mat[currChar-'a'][length] += 1;
+                prevChar = currChar;
             }
         }
-        int res =-1;
-        for(Map.Entry<Pair<Character,Integer>,Integer> entry : mp.entrySet()){
-            int length = entry.getKey().getValue();
-            if(entry.getValue()>=3 && length>res){
-                res = length;
+        int res = -1;
+        for(int i=0;i<26;i++){
+            int sum = 0;
+            for(int j=n;j>=1;j--){
+                sum += mat[i][j];
+                if(sum>=3){
+                    res = Math.max(res,j);
+                    break;
+                }
             }
         }
         return res;
