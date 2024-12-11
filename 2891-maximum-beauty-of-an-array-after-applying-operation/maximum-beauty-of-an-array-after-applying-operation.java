@@ -1,24 +1,33 @@
 class Solution {
-    public int maximumBeauty(int[] nums, int k) {
+    public int binarySearch(int nums[],int target){
+        int result = 0;
+        int l=0;
+        int r=nums.length-1;
 
-        List<int[]> ranges = new ArrayList<>();
-        for(int num : nums){
-            ranges.add(new int[]{num-k,num+k});
+        while(l<=r){
+            int mid=(l+r)/2;
+            if(nums[mid]<=target){
+                result=mid;
+                l=mid+1;
+            }else{
+                r=mid-1;
+            }
         }
-
-        ranges.sort((a,b)->Integer.compare(a[0],b[0]));
+        return result;
+    }
+    public int maximumBeauty(int[] nums, int k) {
+        int n = nums.length;
+        Arrays.sort(nums);
 
         int maxBeauty = 0;
-        Deque<Integer> deque = new ArrayDeque<>();
-
-        for(int range[] : ranges){
-            while(!deque.isEmpty() && deque.peekFirst()<range[0]){
-                deque.pollFirst();
-            }
-            deque.offerLast(range[1]);
-            maxBeauty = Math.max(maxBeauty,deque.size());
+        for(int i=0;i<n;i++){
+            int x = nums[i];
+            int y = x+2*k;
+            // find the farthest y<=x+2k
+            int j = binarySearch(nums,y);
+            maxBeauty = Math.max(maxBeauty,j-i+1);
         }
-        return maxBeauty;
-        
+      return maxBeauty;
+
     }
 }
