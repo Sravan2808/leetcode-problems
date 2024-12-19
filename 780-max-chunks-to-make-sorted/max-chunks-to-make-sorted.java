@@ -25,19 +25,29 @@ class Solution {
         // }
         // return chunks;
 
+        // int n = arr.length;
+
+        // int cumSum = 0;
+        // int originalSum = 0;
+        // int chunks = 0;
+        // for(int i=0;i<n;i++){
+        //     cumSum+=arr[i];
+        //     originalSum+=i;
+
+        //     if(cumSum==originalSum){
+        //         chunks++;
+        //     }
+        // }
+        // return chunks;
+
+
         int n = arr.length;
-
-        int cumSum = 0;
-        int originalSum = 0;
-        int chunks = 0;
+        int max = -1;
+        int chunk = 0;
         for(int i=0;i<n;i++){
-            cumSum+=arr[i];
-            originalSum+=i;
-
-            if(cumSum==originalSum){
-                chunks++;
-            }
+            max = Math.max(max,arr[i]);
+            if(max==i) chunk++;
         }
-        return chunks;
+        return chunk++;
     }
 }
