@@ -4,7 +4,7 @@ class Solution {
         return gcdPointer(b,a%b);
     }
     public int gcd(int largest,int smallest){
-        if(largest>smallest) return gcdPointer(largest,smallest);
+        // if(largest>smallest) return gcdPointer(largest,smallest);
         return gcdPointer(smallest,largest);
     }
     public int findGCD(int[] nums) {
