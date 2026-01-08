@@ -25,7 +25,7 @@ var minDays = function(bloomDay, m, k) {
 
     let l = Math.min(...bloomDay)
     let r = Math.max(...bloomDay)
-    if(bloomDay.length<m*k) return -1;
+    // if(bloomDay.length<m*k) return -1;
     let result = -1;
 
     while(l<=r){
