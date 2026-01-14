@@ -10,14 +10,12 @@
  */
 class Solution {
     ListNode findMiddle(ListNode head){
-        ListNode slow=head,fast=head;
-        ListNode prev = null;
+        ListNode slow=head,fast=head.next;
         while(fast!=null && fast.next!=null){
-            prev = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
-        return prev;
+        return slow;
     }
 
     public ListNode merge(ListNode left,ListNode right){
