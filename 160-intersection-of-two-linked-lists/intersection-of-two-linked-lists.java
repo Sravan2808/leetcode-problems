@@ -11,19 +11,16 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        HashMap<ListNode,Integer> map = new HashMap<>();
-        ListNode curr1 = headA;
-        while(curr1!=null){
-            map.put(curr1,curr1.val);
-            curr1=curr1.next;
-        }
+
+        ListNode curr1= headA;
         ListNode curr2 = headB;
-        while(curr2!=null){
-            if(map.containsKey(curr2)){
-                return curr2;
-            }
-            curr2 = curr2.next;
-        } 
-        return null;
+
+        while(curr1!=curr2){
+            if(curr1!=null) curr1=curr1.next;
+            else curr1=headB;
+            if(curr2!=null) curr2=curr2.next;
+            else curr2=headA;
+        }
+        return curr1;
     }
 }
