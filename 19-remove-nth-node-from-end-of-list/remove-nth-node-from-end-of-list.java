@@ -10,27 +10,26 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        // BruteForceApproach : O(2N);SC:O(1)
-        if(head==null || head.next==null) return null;
+
         ListNode temp = head;
-        int cnt = 0;
-        while(temp!=null){
-            cnt++;
-            temp=temp.next;
+        int size = 0;
+        if (head == null)
+            return null;
+        while (temp != null){
+            temp = temp.next;
+            size+=1;
         }
-        if(cnt == n){
-            ListNode newHead = head.next;
-            return newHead;
+
+        if(size == n) return head.next;
+
+        int deleteNode = size - n;
+
+        ListNode prev = null;
+        ListNode curr = head;
+        for (int i = 1; i <deleteNode; i++) {
+            curr = curr.next;
         }
-        int res= cnt-n;
-        temp=head;
-        while(temp!=null){
-            res--;
-            if(res==0) break;
-            temp=temp.next;
-        }
-       ListNode delNode = temp.next;
-        temp.next = temp.next.next;
+        curr.next = curr.next.next;
         return head;
     }
 }
