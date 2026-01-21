@@ -1,31 +1,41 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        // BruteForce Approach TC:O(5N) SC:O(4N)
+
         int n = heights.length;
-        Stack<Integer> st = new Stack<>();
-        int leftSmall[] = new int[n];
-        int rightSmall[] = new int[n];
+        int[] NSL = new int[n];
+        int[] NSR = new int[n];
+        Arrays.fill(NSL,-1);
+        Arrays.fill(NSR,n);
+        Stack<Integer> st1 = new Stack<Integer>();
+        Stack<Integer> st2 = new Stack<Integer>();
         for(int i=0;i<n;i++){
-            while(!st.empty() && heights[st.peek()]>=heights[i]) st.pop();
-            if(st.empty()) leftSmall[i] = 0;
-            else leftSmall[i] = st.peek()+1;
-            st.push(i);
-        }
-
-        while(!st.empty()) st.pop();
-        for(int i=n-1;i>=0;i--){
-            while(!st.empty() && heights[st.peek()]>=heights[i]){
-                st.pop();
+            while(!st1.isEmpty() && heights[st1.peek()]>=heights[i]){
+                st1.pop();
             }
-            if(st.empty()) rightSmall[i] = n-1;
-            else rightSmall[i] = st.peek()-1;
+            if(!st1.isEmpty()){
+                NSL[i] = st1.peek();
+            }
+            st1.push(i);
+        }
 
-            st.push(i);
+        for(int i=n-1;i>=0;i--){
+            while(!st2.isEmpty() && heights[st2.peek()]>=heights[i]){
+                st2.pop();
+            }
+            if(!st2.isEmpty()){
+                NSR[i] = st2.peek();
+            }
+            st2.push(i);
         }
-        int max = 0;
-        for(int i=0;i<n;i++){
-            max = Math.max(max,heights[i]*(rightSmall[i]-leftSmall[i]+1));
+
+
+        int ans = -1;
+        for(int i=0;i<heights.length;i++){
+            int width = NSR[i]-NSL[i]-1; 
+            ans = Math.max(ans,heights[i]*width);
         }
-        return max;
+
+        return ans;
+        
     }
 }
