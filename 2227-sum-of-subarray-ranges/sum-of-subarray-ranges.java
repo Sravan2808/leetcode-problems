@@ -1,99 +1,67 @@
 class Solution {
-    int[] getNGL(int nums[],int n){
-         int result[] = new int[n];
-        Stack<Integer> st = new Stack<>();
-        for(int i=0;i<n;i++){
-            if(st.empty()) result[i] = -1;
-            else{
-                while(!st.empty() && nums[st.peek()]<=nums[i]) st.pop();
-                result[i] = st.empty()?-1:st.peek();
-            }
-            st.push(i);
-        }
-        return result;
-    }
-      int[] getNGR(int nums[],int n){
-         int result[] = new int[n];
-        Stack<Integer> st = new Stack<>();
-        for(int i=n-1;i>=0;i--){
-            if(st.empty()) result[i] = n;
-            else{
-                while(!st.empty() && nums[st.peek()]<nums[i]) st.pop();
-                result[i] = st.empty()?n:st.peek();
-            }
-            st.push(i);
-        }
-        return result;
-    }
-
-    long sumMax(int nums[]){
-        int n = nums.length;
-        int NGL[] = getNGL(nums,n);
-        int NGR[] = getNGR(nums,n);
-        long sum =0;
-        for(int i=0;i<n;i++){
-            long ls = i-NGL[i];
-            long rs = NGR[i] - i;
-            long totalWays = ls*rs;
-            long totalSum = (long) nums[i]*totalWays;
-            sum = sum+totalSum;
-        }
-        return sum;
-    }
-    int[] getNSL(int []nums,int n){
-        int result[] = new int[n];
-        Stack<Integer> st = new Stack<>();
-        for(int i=0;i<n;i++){
-            if(st.empty()) result[i] = -1;
-            else{
-                while(!st.empty() && nums[st.peek()]>nums[i]) st.pop();
-                result[i] = st.empty()?-1:st.peek();
-            }
-            st.push(i);
-        }
-        return result;
-    }
-    int[] getNSR(int nums[],int n){
-         int result[] = new int[n];
-        Stack<Integer> st = new Stack<>();
-        for(int i=n-1;i>=0;i--){
-            if(st.empty()) result[i] = n;
-            else{
-                while(!st.empty() && nums[st.peek()]>=nums[i]) st.pop();
-                result[i] = st.empty()?n:st.peek();
-            }
-            st.push(i);
-        }
-        return result;
-    }
-    long sumMin(int nums[]){
-        int n = nums.length;
-        int NSL[] = getNSL(nums,n);
-        int NSR[] = getNSR(nums,n);
-        long sum =0;
-        for(int i=0;i<n;i++){
-            long ls = i-NSL[i];
-            long rs = NSR[i] - i;
-            long totalWays = ls*rs;
-            long totalSum = (long) nums[i]*totalWays;
-            sum = sum+totalSum;
-        }
-        return sum;
-    }
     public long subArrayRanges(int[] nums) {
-        // BruteForce TC:O(N^2) SC:O(1)
-        // int sum = 0;
-        // for(int i=0;i<nums.length;i++){
-        //     int largest = nums[i];
-        //     int smallest = nums[i];
-        //     for(int j=i+1;j<nums.length;j++){
-        //         largest = Math.max(largest,nums[j]);
-        //         smallest = Math.min(smallest,nums[j]);
-        //         sum+=(largest-smallest);
-        //     }
-        // }
-        // return sum;
+         Stack<Integer> st1 = new Stack<Integer>();
+        Stack<Integer> st2 = new Stack<Integer>();
+        Stack<Integer> st3 = new Stack<Integer>();
+        Stack<Integer> st4 = new Stack<Integer>();
 
-        return (sumMax(nums) - sumMin(nums));
+        int[] NSL = new int[nums.length];
+        int[] NSR = new int[nums.length];
+        int[] NGL = new int[nums.length];
+        int[] NGR = new int[nums.length];
+
+        for(int i=0;i<nums.length;i++){
+            while(!st1.isEmpty() && nums[st1.peek()]>nums[i]){
+                st1.pop();
+            }
+            if(!st1.isEmpty()){
+                NSL[i] = st1.peek();
+            }
+            else NSL[i] = -1;
+            st1.push(i);
+        }
+
+          for(int i=nums.length-1;i>=0;i--){
+            while(!st2.isEmpty() && nums[st2.peek()]>=nums[i]){
+                st2.pop();
+            }
+            if(!st2.isEmpty()){
+                NSR[i] = st2.peek();
+            }
+            else NSR[i] = nums.length;
+            st2.push(i);
+        }
+
+        for(int i=0;i<nums.length;i++){
+            while(!st3.isEmpty() && nums[st3.peek()]<nums[i]){
+                st3.pop();
+            }
+            if(!st3.isEmpty()){
+                NGL[i] = st3.peek();
+            }
+            else NGL[i] = -1;
+            st3.push(i);
+        }
+
+        for(int i=nums.length-1;i>=0;i--){
+            while(!st4.isEmpty() && nums[st4.peek()]<=nums[i]){
+                st4.pop();
+            }
+            if(!st4.isEmpty()){
+                NGR[i] = st4.peek();
+            }
+            else NGR[i] = nums.length;
+            st4.push(i);
+        }
+
+        long ans = 0;
+        for(int i=0;i<nums.length;i++){
+            long max = (long) (i-NGL[i]) * (NGR[i]-i);
+            long min = (long) (i-NSL[i]) * (NSR[i]-i);
+            ans += (long) nums[i]*(max-min);
+        }
+
+        return ans;
+        
     }
 }
