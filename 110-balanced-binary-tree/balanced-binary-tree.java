@@ -14,17 +14,16 @@
  * }
  */
 class Solution {
-    int height(TreeNode root){
+    int min = Integer.MIN_VALUE;
+    int Height(TreeNode root){
         if(root==null) return -1;
-        int left = height(root.left);
-        int right = height(root.right);
-        return Math.max(right,left)+1; 
+        int left = Height(root.left);
+        int right = Height(root.right);
+        if(left == min || right == min) return min;
+        if(Math.abs(right-left)>1) return min ;
+        return Math.max(left,right)+1;
     }
     public boolean isBalanced(TreeNode root) {
-        if(root==null) return true;
-        int left = height(root.left);
-        int right = height(root.right);
-        if(Math.abs(right-left)>1) return false;
-        return isBalanced(root.left)&&isBalanced(root.right);
+        return Height(root)!=min;
     }
 }
