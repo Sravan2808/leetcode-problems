@@ -13,40 +13,16 @@
  *     }
  * }
  */
-//  Time complexity : O(h)
-// Space complexity : O(h)
-
 class Solution {
     public TreeNode searchBST(TreeNode root, int val) {
-        // Recursive approach
-        // // base case condition
-        // if(root == null || root.val==val){
-        //     return root;
-        // }
-        // // traverse the left subtree
-        // if(val < root.val){
-        //     return searchBST(root.left,val);
-        // }
-        // else{
-        //     // traverse the right subtree
-        //     return searchBST(root.right,val);
-        // }
-
-        // Iterative approach
-
-        TreeNode current=root;
-        TreeNode parentNode=null;
-        while(current!=null && current.val!=val){
-            if(val<current.val){
-                // traverse towards left side
-                current=current.left;
-            }
-            else{
-                // traverse towards right side
-                current=current.right;
-            }
+        TreeNode temp = root;
+        if(temp==null) return null;
+        while(temp!=null){
+            if(temp.val == val) return temp;
+            else if(temp.val<val) temp=temp.right;
+            else temp=temp.left;
         }
-        return current;
+        return null;
         
     }
 }
