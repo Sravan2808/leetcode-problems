@@ -14,24 +14,21 @@
  * }
  */
 class Solution {
-    // Function definition
-    public ArrayList<Integer> inOrderTraversal(TreeNode root,ArrayList<Integer> result){
-        if(root == null){
-            return result;
-        }
-        // 1.Traverse towards the left subtree
-        inOrderTraversal(root.left,result);
-        // 2.store the elements inside the result array
-        result.add(root.val);
-        // 3.traverse towards the right subtree
-        inOrderTraversal(root.right,result);
+    int ans = -1;
+    int cnt = 0;
 
-        return result;
+    public int inorder(TreeNode root, int k) {
+        if (root == null)
+            return cnt;
+        inorder(root.left,k);
+        cnt++;
+        if(cnt==k) ans = root.val;
+        inorder(root.right,k);
+        return ans;
     }
+
     public int kthSmallest(TreeNode root, int k) {
-        ArrayList<Integer> result= inOrderTraversal(root,new ArrayList<Integer>());
-        // return the kth smallest element
-        return result.get(k-1);
-        
+        int result = inorder(root, k);
+        return result;
     }
 }
