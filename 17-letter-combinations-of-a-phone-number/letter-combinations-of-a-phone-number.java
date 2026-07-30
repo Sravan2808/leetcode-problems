@@ -1,30 +1,20 @@
 class Solution {
-    public void backtrack(List<String> res,StringBuilder sb,String digits,String[] lettersMap,int idx){
+    String[] letterMap = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    private void helper(String digits,String current,List<String> ans,int idx){
         if(idx==digits.length()){
-            res.add(sb.toString());
+            ans.add(current);
             return;
         }
-        int number = digits.charAt(idx)-'0';//2
-        String numStr = lettersMap[number];//abc
+        int num = digits.charAt(idx)-'0';
+        String numStr = letterMap[num];
         for(int i=0;i<numStr.length();i++){
-            sb.append(numStr.charAt(i));
-            backtrack(res,sb,digits,lettersMap,idx+1);
-            sb.deleteCharAt(sb.length()-1);
-
+            helper(digits,current+numStr.charAt(i),ans,idx+1);
         }
-
     }
     public List<String> letterCombinations(String digits) {
-        List<String> ans=new ArrayList<>();
-        if(digits == null || digits.length() == 0)
-        {
-            return ans;
-        }
-
-        String[] lettersMap = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-
-        backtrack(ans,new StringBuilder(),digits,lettersMap,0);
+        List<String> ans = new ArrayList<>();
+        if(digits.isEmpty()) return ans;
+        helper(digits,"",ans,0);
         return ans;
-        
     }
 }
