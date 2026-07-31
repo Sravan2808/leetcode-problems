@@ -14,11 +14,23 @@
  * }
  */
 class Solution {
-        HashSet<Integer> set = new HashSet<>();
+    private void Inorder(TreeNode root,List<Integer> ans){
+        if(root==null) return;
+        Inorder(root.left,ans);
+        ans.add(root.val);
+        Inorder(root.right,ans);
+    }
     public boolean findTarget(TreeNode root, int k) {
-        if(root==null) return false;
-        if(set.contains(k-root.val)) return true;
-        set.add(root.val);
-        return findTarget(root.left,k) || findTarget(root.right,k);
+        List<Integer> ans = new ArrayList<>();
+        Inorder(root,ans);
+        int i=0;
+        int j=ans.size()-1;
+        while(i<j){
+            int sum = ans.get(i)+ans.get(j);
+            if(sum==k) return true;
+            else if(sum>k) j--;
+            else i++;
+        }
+        return false;
     }
 }
