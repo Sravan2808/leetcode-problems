@@ -14,55 +14,27 @@
  * }
  */
 class Solution {
+    private List<Integer> inorderValue = new ArrayList<>();
+    private int index = 0;
     public void recoverTree(TreeNode root) {
-        TreeNode curr = root;
-        TreeNode prev = null;
-        TreeNode pprev = null;
-        List<TreeNode> list = new ArrayList<>();
-        while (curr != null) {
-            if (curr.left != null) {
-                TreeNode temp = curr.left;
-                while (temp.right != null && temp.right != curr)
-                    temp = temp.right;
-                if (temp.right == null) {
-                    temp.right = curr;
-                    curr = curr.left;
-                } else {
-                    temp.right = null;
-                    // value
-                    if (prev != null && pprev != null) {
-                        if (prev.val > curr.val && prev.val > pprev.val)
-                            list.add(prev);
-                        if (prev.val < curr.val && prev.val < pprev.val)
-                            list.add(prev);
-                    } else if (prev != null && prev.val > curr.val)
-                        list.add(prev);
-
-                    pprev = prev;
-                    prev = curr;
-                    curr = curr.right;
-                }
-            } else {
-                // valie
-                if (prev != null && pprev != null) {
-                    if (prev.val > curr.val && prev.val > pprev.val)
-                        list.add(prev);
-                    if (prev.val < curr.val && prev.val < pprev.val)
-                        list.add(prev);
-                } else if (prev != null && prev.val > curr.val)
-                    list.add(prev);
-
-                pprev = prev;
-                prev = curr;
-                curr = curr.right;
-            }
-
-        }
-        if(prev.val<pprev.val) list.add(prev);
-        TreeNode first = list.get(0);
-        TreeNode second = list.get(list.size()-1);
-        int temp = first.val;
-        first.val = second.val;
-        second.val = temp;
+        // Step1:Get all inorder Values
+        inorder(root);
+        // Step2:Sort the data
+        Collections.sort(inorderValue);
+        // Step3:Restore all the data
+        restore(root);
+    }
+    private void inorder(TreeNode root){
+        if(root==null) return;
+        inorder(root.left);
+        inorderValue.add(root.val);
+        inorder(root.right);
+    }
+    private void restore(TreeNode root){
+        if(root==null) return;
+        restore(root.left);
+        root.val = inorderValue.get(index);
+        index++;
+        restore(root.right);
     }
 }
