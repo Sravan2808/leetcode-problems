@@ -1,20 +1,18 @@
 class Solution {
-    int dp[];
-    private boolean solve(int n){
-        if(n==0) return false;
-        if(dp[n]!=-1) return dp[n]==1?true:false;
-        for(int k=1;k*k<=n;k++){
-            if(solve(n-(k*k))==false){
-                dp[n]=1;
-                return true;
+    public boolean winnerSquareGame(int n) {
+        boolean dp[] = new boolean[n+1];
+        Arrays.fill(dp,false);
+
+        dp[0] = false;
+
+        for(int i=1;i<n+1;i++){
+            for(int k=1;k*k<=i;k++){
+                if(dp[i-(k*k)]==false){
+                    dp[i]=true;
+                    break;
+                }
             }
         }
-        dp[n]=0;
-        return false;
-    }
-    public boolean winnerSquareGame(int n) {
-        dp = new int[n+1];
-        Arrays.fill(dp,-1);
-        return solve(n);
+        return dp[n];
     }
 }
