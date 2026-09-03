@@ -3,12 +3,11 @@ class Solution {
         int n=nums1.length;
         int oddnum = 0;
 
-        Arrays.sort(nums1);
+        // Arrays.sort(nums1);
 
         for(int i=0;i<n;i++){
-            if(nums1[i]%2!=0 && oddnum==0){
-                oddnum=nums1[i];
-                break;
+            if(nums1[i]%2!=0){
+                oddnum = (oddnum==0)?nums1[i]:Math.min(oddnum,nums1[i]);
             }
         }
 
