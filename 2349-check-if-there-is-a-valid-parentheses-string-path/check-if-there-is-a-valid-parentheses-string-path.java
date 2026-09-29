@@ -45,7 +45,7 @@ class Solution {
         if (grid[0][0] == ')' || grid[m - 1][n - 1] == '(')
             return false;
 
-        dp = new int[m][n][len + 1];
+        dp = new int[101][101][201];
 
         for (int[][] arr : dp) {
             for (int[] row : arr) {
