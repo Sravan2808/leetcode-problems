@@ -16,7 +16,7 @@ class Solution {
             if (n % i == 0) {
                 ans += nums[i - 1] * nums[i - 1];
 
-                if (n / i != i) {
+                if (i!=n/i) {
                     ans += nums[n / i - 1] * nums[n / i - 1];
                 }
             }
