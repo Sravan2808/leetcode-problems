@@ -1,21 +1,22 @@
+class Pair{
+    int price;
+    int stock;
+    Pair(int price,int stock){
+        this.price = price;
+        this.stock = stock;
+    }
+}
 class StockSpanner {
-    Stack<Integer> prices,days;
-
+    Stack<Pair> st;
     public StockSpanner() {
-        prices = new Stack<>();
-        days = new Stack<>();
+        st = new Stack<>();
     }
     
     public int next(int price) {
-        int ans = 1;
-        while(!prices.isEmpty() && prices.peek()<=price){
-            prices.pop();
-            ans+=days.pop();
-        }
-        prices.push(price);
-        days.push(ans);
-        return ans;
-        
+        int stock = 1;
+        while(!st.isEmpty() && st.peek().price<=price) stock+=st.pop().stock;
+        st.push(new Pair(price,stock));
+        return stock;
     }
 }
 
